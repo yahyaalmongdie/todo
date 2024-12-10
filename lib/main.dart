@@ -4,7 +4,6 @@ import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/models/ModelProvider.dart';
-import 'package:todo/signup_form.dart';
 
 import 'amplify_outputs.dart';
 
@@ -38,84 +37,7 @@ class ToDoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Authenticator(
-      authenticatorBuilder: (BuildContext context, AuthenticatorState state) {
-        switch (state.currentStep) {
-          case AuthenticatorStep.signIn:
-            return CustomScaffold(
-              state: state,
-              // A prebuilt Sign In form from amplify_authenticator
-              body: SignInForm(),
-              // A custom footer with a button to take the user to sign up
-              footer: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Don\'t have an account?'),
-                  TextButton(
-                    onPressed: () => state.changeStep(
-                      AuthenticatorStep.signUp,
-                    ),
-                    child: const Text('Sign Up'),
-                  ),
-                ],
-              ),
-            );
-          case AuthenticatorStep.signUp:
-            return CustomScaffold(
-              state: state,
-              // A prebuilt Sign Up form from amplify_authenticator
-              body: SignUpForm(),
-              // A custom footer with a button to take the user to sign in
-              footer: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Already have an account?'),
-                  TextButton(
-                    onPressed: () => state.changeStep(
-                      AuthenticatorStep.signIn,
-                    ),
-                    child: const Text('Sign In'),
-                  ),
-                ],
-              ),
-            );
-          case AuthenticatorStep.confirmSignUp:
-            return CustomScaffold(
-              state: state,
-              // A prebuilt Confirm Sign Up form from amplify_authenticator
-              body: ConfirmSignUpForm(),
-            );
-          case AuthenticatorStep.resetPassword:
-            return CustomScaffold(
-              state: state,
-              // A prebuilt Reset Password form from amplify_authenticator
-              body: ResetPasswordForm(),
-            );
-          case AuthenticatorStep.confirmResetPassword:
-            return CustomScaffold(
-              state: state,
-              // A prebuilt Confirm Reset Password form from amplify_authenticator
-              body: const ConfirmResetPasswordForm(),
-            );
-          default:
-            // Returning null defaults to the prebuilt authenticator for all other steps
-            return null;
-        }
-      },
-      signUpForm: newMethod(),
       child: MaterialApp(
-        theme: ThemeData(
-          inputDecorationTheme: InputDecorationTheme(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.blue, width: 2.0),
-            ),
-            labelStyle: const TextStyle(color: Colors.grey),
-            hintStyle: TextStyle(color: Colors.grey.shade600),
-          ),
-        ),
-        debugShowCheckedModeBanner: false,
         builder: Authenticator.builder(),
         home: const Scaffold(
           body: Center(
@@ -123,21 +45,11 @@ class ToDoApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SignOutButton(),
-                Text('TODO Application'),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-
-  SignUpForm newMethod() {
-    return SignUpForm.custom(
-      fields: [
-        SignUpFormField.username(),
-        SignUpFormField.email(required: true),
-      ],
     );
   }
 }
