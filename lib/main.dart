@@ -47,6 +47,7 @@ class ToDoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Authenticator(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         builder: Authenticator.builder(),
         home: const Scaffold(
           body: Center(
