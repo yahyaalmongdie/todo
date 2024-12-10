@@ -33,6 +33,7 @@ dependencies:
   amplify_authenticator: ^2.3.1
   amplify_flutter: ^2.5.0
   cupertino_icons: ^1.0.8
+  expandable_page_view: ^1.0.17
   flutter:
     sdk: flutter
 
